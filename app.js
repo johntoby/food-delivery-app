@@ -8,6 +8,27 @@ const foods = [
 ];
 
 let cart = [];
+let userLocation = null;
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                document.getElementById("location").textContent = 
+                    `📍 ${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}`;
+            },
+            () => {
+                document.getElementById("location").textContent = "📍 Location unavailable";
+            }
+        );
+    }
+}
+
+getLocation();
 
 function renderFoods(category = "all") {
     const grid = document.getElementById("foodGrid");
@@ -69,3 +90,5 @@ document.getElementById("checkout").addEventListener("click", () => {
 });
 
 renderFoods();
+
+ 
